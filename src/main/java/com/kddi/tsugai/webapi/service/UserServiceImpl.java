@@ -1,7 +1,12 @@
 package com.kddi.tsugai.webapi.service;
 
 import com.kddi.tsugai.webapi.domain.User;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,7 +20,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User get(String id){
-        return null;
+        User user = new User();
+        user.setId("seiji-k");
+        user.setName("Seiji Kawakami");
+        user.setPropertyMap("phone", "080-5066-9380");
+        user.setPropertyMap("mailAddress", "seiji-k@kddi.com");
+        user.setPropertyMap("password","password");
+        user.setProperties();
+        return user;
     }
 
     @Override

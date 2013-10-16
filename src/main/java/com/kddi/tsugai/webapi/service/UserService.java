@@ -2,6 +2,8 @@ package com.kddi.tsugai.webapi.service;
 
 import com.kddi.tsugai.webapi.domain.User;
 
+import java.security.PublicKey;
+
 /**
  * Created with IntelliJ IDEA.
  * User: seiji-k
@@ -14,4 +16,5 @@ public interface UserService {
     public void insert(User user);
     public void update(String id);
     public void delete(String id);
+
 }
