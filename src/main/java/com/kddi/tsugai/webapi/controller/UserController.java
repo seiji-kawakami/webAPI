@@ -1,14 +1,22 @@
 package com.kddi.tsugai.webapi.controller;
 
+import com.kddi.tsugai.webapi.dao.*;
 import com.kddi.tsugai.webapi.domain.User;
+import org.codehaus.jackson.JsonFactory;
+import org.codehaus.jackson.JsonToken;
+import org.codehaus.jackson.annotate.JsonValue;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.postgresql.util.PGobject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import com.kddi.tsugai.webapi.service.UserService;
-import org.springframework.web.bind.annotation.ResponseBody;
+import sun.org.mozilla.javascript.internal.json.JsonParser;
+
+import java.io.File;
+import java.io.InputStream;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -38,6 +46,41 @@ public class UserController {
     public User get(@PathVariable ("corpId") String corpId,@PathVariable ("userId") String userId){
         return userService.get(corpId,userId);
 
+    }
+
+    @RequestMapping(value="/user/fix",method = RequestMethod.POST)
+    @ResponseBody
+    public void insert(){
+        User user = new User();
+        userService.insert(user);
+    }
+
+    @RequestMapping(value="/user",method = RequestMethod.POST)
+    @ResponseBody
+    public UserRequest insert(@RequestBody final UserRequest userRequest){
+        return userRequest;
+    }
+
+    @RequestMapping(value="/servicebean",method = RequestMethod.POST)
+    @ResponseBody
+    public ServiceBean insert(@RequestBody final ServiceBean serviceBean){
+        return serviceBean;
+    }
+
+    @RequestMapping(value="/{corpId}/{userId}",method =RequestMethod.DELETE)
+    @ResponseBody
+    public String delete(@PathVariable ("corpId") String corpId,@PathVariable ("userId") String userId){
+        return userService.delete(corpId,userId);
+    }
+
+    @RequestMapping(value="/sample",method = RequestMethod.POST)
+    @ResponseBody
+    public Result math(@RequestBody final Request request) {
+        final Result result = new Result();
+        result.setAddition(request.getLeft() + request.getRight());
+        result.setSubtraction(request.getLeft() - request.getRight());
+        result.setMultiplication(request.getLeft() * request.getRight());
+        return result;
     }
 
 

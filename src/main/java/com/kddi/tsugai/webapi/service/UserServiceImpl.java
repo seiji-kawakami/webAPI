@@ -24,13 +24,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User get(String corpId,String userId){
         User user = new User();
-/*      user.setId(userId);
-        user.setCorpId(corpId);
-        user.setPropertyMap("phone", "080-5066-9380");
-        user.setPropertyMap("mailAddress", "seiji-k@kddi.com");
-        user.setPropertyMap("password","password");
-        user.setProperties();
-        return user;*/
         try {
             jdbcUserDao.setDataSource();
             return jdbcUserDao.get(corpId,userId);
@@ -43,7 +36,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void insert(User user){
-
+        jdbcUserDao.setDataSource();
+        jdbcUserDao.insert(user);
     }
 
     @Override
@@ -52,7 +46,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(String id){
+    public String delete(String corpId,String userId){
+        jdbcUserDao.setDataSource();
+        int result = jdbcUserDao.delete(corpId,userId);
+
+        if (result == 1){
+            return "Success";
+        }else{
+            return "Failed";
+        }
 
     }
 }

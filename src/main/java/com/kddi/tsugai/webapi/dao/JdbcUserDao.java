@@ -8,6 +8,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.postgresql.Driver;
 import org.springframework.stereotype.Repository;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -21,7 +22,6 @@ import java.sql.SQLException;
 
 public class JdbcUserDao {
     private DriverManagerDataSource dataSource=new DriverManagerDataSource();
-    private User user = new User();
 
     public void setDataSource() {
         dataSource.setDriverClassName("org.postgresql.Driver");
@@ -31,7 +31,6 @@ public class JdbcUserDao {
     }
 
     public User get(String corpId,String userId) throws SQLException {
-
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
         return jdbcTemplate.queryForObject("select * from t_user where corp_id =? and user_id = ?",new RowMapper<User>() {
@@ -46,6 +45,19 @@ public class JdbcUserDao {
         },corpId,userId);
     }
 
+    public void insert(User user){
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        String sql = "insert into t_user (user_id,corp_id,properties) values (?,?,?)";
+        String corpId =  "kddi";
+        String userId =  "seiji-k@kddi";
+        String properties = "'{\"Name\":\"川上 誠司\",\"mailAddress\":\"seiji-k@kddi.com\",\"phone\": \"080-5066-9380\"}'";
+        int i = jdbcTemplate.update("insert into t_user values ('seiji-k@kddi','kddi','{\"Name\":\"川上 誠司\",\"mailAddress\":\"seiji-k@kddi.com\",\"phone\": \"080-5066-9380\"}')");
+    }
 
+    public int delete(String corpId, String userId) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
+        return jdbcTemplate.update("delete from t_user where corp_id =? and user_id = ?",
+                corpId,userId);
+    }
 }

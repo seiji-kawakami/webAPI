@@ -15,6 +15,6 @@ public interface UserService {
     public User get(String corpId,String userId);
     public void insert(User user);
     public void update(String id);
-    public void delete(String id);
+    public String delete(String corpId,String userId);
 
 }
