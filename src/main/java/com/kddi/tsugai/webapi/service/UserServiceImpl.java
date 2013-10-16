@@ -19,10 +19,10 @@ import java.io.IOException;
 public class UserServiceImpl implements UserService {
 
     @Override
-    public User get(String id){
+    public User get(String corpId,String userId){
         User user = new User();
-        user.setId("seiji-k");
-        user.setName("Seiji Kawakami");
+        user.setId(userId);
+        user.setCorpId(corpId);
         user.setPropertyMap("phone", "080-5066-9380");
         user.setPropertyMap("mailAddress", "seiji-k@kddi.com");
         user.setPropertyMap("password","password");

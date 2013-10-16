@@ -1,12 +1,14 @@
 package com.kddi.tsugai.webapi.controller;
 
+import com.kddi.tsugai.webapi.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import com.kddi.tsugai.webapi.service.UserService;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,4 +32,13 @@ public class UserController {
         model.addAttribute("message", "Hello world!");
         return "hello";
     }
+
+    @RequestMapping(value="/{corpId}/{userId}",method = RequestMethod.GET)
+    @ResponseBody
+    public User get(@PathVariable ("corpId") String corpId,@PathVariable ("userId") String userId){
+        return userService.get(corpId,userId);
+
+    }
+
+
 }

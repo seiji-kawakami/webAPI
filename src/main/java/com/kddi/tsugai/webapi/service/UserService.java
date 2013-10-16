@@ -12,7 +12,7 @@ import java.security.PublicKey;
  * To change this template use File | Settings | File Templates.
  */
 public interface UserService {
-    public User get(String id);
+    public User get(String corpId,String userId);
     public void insert(User user);
     public void update(String id);
     public void delete(String id);
